@@ -1,17 +1,13 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
-    name: String,
-    email: String,
-    password: String,
-    phone: String,
-    items: [
-        {
-            itemName: String,
-            quantity: Number,
-            imageUrl: String,
-        }
-    ]
+  name: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
+  password: { type: String, required: true },
+  phone: { type: String, required: true, unique: true }
 });
 
-module.exports = mongoose.model("User", userSchema);
+// Prevent model overwrite error
+const User = mongoose.models.User || mongoose.model("User", userSchema);
+
+export default User;
